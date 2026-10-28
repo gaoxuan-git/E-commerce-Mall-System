@@ -1,0 +1,21 @@
+{
+  "name": "crmeb-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test:smoke": "playwright test --grep @smoke",
+    "test:core": "playwright test --grep @core",
+    "test:full": "playwright test",
+    "test:h5:smoke": "playwright test --project=h5-mobile --grep @smoke",
+    "test:admin:smoke": "playwright test --project=admin-desktop --grep @smoke",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "dotenv": "16.4.7"
+  }
+}

@@ -1,0 +1,50 @@
+.idea/
+.claude/
+frontend/uni-app/unpackage
+Crmeb-2022-01-04.log
+crmeb_front_log
+backend/LOG_HOME_IS_UNDEFINED
+*.
+*.
+.DS_Store
+
+# Local end-to-end test state and generated evidence
+tests/e2e/node_modules/
+tests/e2e/.env
+tests/e2e/auth/
+tests/e2e/artifacts/*
+!tests/e2e/artifacts/.gitkeep
+tests/e2e/playwright-report/
+tests/e2e/test-results/
+tests/e2e/runtime/
+tests/e2e/*.sql
+
+# Generated test coverage
+frontend/admin/tests/unit/coverage/
+backend/**/target/site/jacoco/
+
+# Local tools, generated packages, and database backups
+.vscode/
+.trae/
+.superpowers/
+.trae-html-share-packages/
+**/__MACOSX/
+**/node_modules/
+**/target/
+**/*.log
+**/*.pid
+/APK安装包/
+/数据库导出/
+/验收截图/
+
+# Local credentials and signing keys
+.env
+.env.local
+.env.*.local
+*.jks
+*.keystore
+*.pem
+*.p12
+*.pfx
+*.apk
+*.aab

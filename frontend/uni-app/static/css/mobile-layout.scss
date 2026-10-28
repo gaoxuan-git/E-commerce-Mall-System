@@ -1,0 +1,13 @@
+// 原生标题栏由 WebView 处理；自定义导航需要自行避让状态栏。
+page {
+	--mall-safe-top: var(--status-bar-height, 0px);
+	--mall-safe-bottom: env(safe-area-inset-bottom, 0px);
+	--mall-window-top: var(--window-top, 0px);
+	--mall-custom-top: calc(var(--mall-window-top) + var(--mall-safe-top));
+}
+
+/* #ifdef H5 */
+page {
+	--mall-safe-top: env(safe-area-inset-top, 0px);
+}
+/* #endif */

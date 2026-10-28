@@ -1,0 +1,85 @@
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
+
+import {
+	HTTP_REQUEST_URL,
+	HEADER,
+	TOKENNAME,
+	HEADERPARAMS
+} from '@/config/app.js';
+import { LOGIN_STATUS } from '@/config/cache.js';
+import {
+	toLogin,
+	checkLogin
+} from '@/libs/login.js';
+import { useAppStore } from "@/store/app.js";
+import { serverConnection } from '@/config/serverConnection.js';
+
+
+/**
+ * 发送请求
+ */
+async function baseRequest(url, method, data, {
+	noAuth = false,
+	noVerify = false
+}, params) {
+	await serverConnection.ensureReady();
+	const generation = serverConnection.getGeneration();
+	let Url = HTTP_REQUEST_URL,
+		header = { ...HEADER }
+	// if (params != undefined) {
+	// 	header = HEADERPARAMS;
+	// }
+	const appStore = useAppStore();
+	if (!noAuth) {
+		//登录过期自动登录
+		if (!appStore.token && !checkLogin()) {
+			toLogin();
+			return Promise.reject({
+				msg: '未登录'
+			});
+		}
+	}
+	const requestToken = appStore.token || getCacheToken();
+	if (requestToken) header[TOKENNAME] = `Bearer ${requestToken}`;
+	return new Promise((reslove, reject) => {
+		uni.request({
+			url: Url + '/api/public/' + url,
+			method: method || 'GET',
+			header: header,
+			data: data || {},
+			success: (res) => {
+				if (generation !== serverConnection.getGeneration()) return reject('服务器已切换');
+				reslove(res.data, res);
+			},
+			fail: (msg) => {
+				reject('请求失败');
+			}
+		})
+	});
+}
+
+function getCacheToken() {
+	try {
+		return uni.getStorageSync(LOGIN_STATUS) || '';
+	} catch (e) {
+		return '';
+	}
+}
+
+const request = {};
+
+['options', 'get', 'post', 'put', 'head', 'delete', 'trace', 'connect'].forEach((method) => {
+	request[method] = (api, data, opt, params) => baseRequest(api, method, data, opt || {}, params)
+});
+
+
+
+export default request;
