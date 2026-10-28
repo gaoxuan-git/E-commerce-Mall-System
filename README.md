@@ -6,6 +6,8 @@
 后端可通过 `CRMEB_DB_PASSWORD`、`CRMEB_REDIS_PASSWORD`、`CRMEB_IMAGE_PATH` 配置数据库密码、Redis 密码和图片目录；图片目录应指向 `crmebimage/` 的上一级目录并以 `/` 结尾。
 开发环境默认数据库密码为演示值 `123456`，请按实际环境设置；使用 `--spring.profiles.active=dev` 启动后端。
 
+Android 安装包及安装说明见 [APK安装包](APK安装包/)；签名资料、完整 SQL 备份和开发临时文件的加密备份及还原方法见 [上传补充](上传补充/README.md)。
+
 本项目基于 CRMEB Java 开发，原始许可证和源码版权声明保留。以下为上游项目说明。
 
 <div align="center">
